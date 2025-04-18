@@ -356,6 +356,24 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "google_ml_kit",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_ml_kit-0.7.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "google_mlkit_commons",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_mlkit_commons-0.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "google_mlkit_text_recognition",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_mlkit_text_recognition-0.15.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "google_sign_in",
       "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_sign_in-6.3.0",
       "packageUri": "lib/",
@@ -962,7 +980,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-04-07T14:28:42.631864Z",
+  "generated": "2025-04-14T20:44:19.358822Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///Users/gerardoarroyo/flutter",
