@@ -44,6 +44,36 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "camera",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/camera-0.10.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "camera_android",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/camera_android-0.10.10+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "camera_avfoundation",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/camera_avfoundation-0.9.18+14",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "camera_platform_interface",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/camera_platform_interface-2.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "camera_web",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/camera_web-0.3.5",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/characters-1.4.0",
       "packageUri": "lib/",
@@ -318,6 +348,12 @@
       "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.27",
       "packageUri": "lib/",
       "languageVersion": "3.6"
+    },
+    {
+      "name": "flutter_spinkit",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/flutter_spinkit-5.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "flutter_stripe",
@@ -824,6 +860,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "stream_transform",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/stream_transform-2.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
       "name": "string_scanner",
       "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/string_scanner-1.4.1",
       "packageUri": "lib/",
@@ -980,10 +1022,10 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-04-14T20:44:19.358822Z",
+  "generated": "2025-04-22T04:06:35.436511Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///Users/gerardoarroyo/flutter",
-  "flutterVersion": "3.29.2",
+  "flutterVersion": "3.29.3",
   "pubCache": "file:///Users/gerardoarroyo/.pub-cache"
 }
