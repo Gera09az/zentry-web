@@ -4,6 +4,9 @@ description: A new Flutter project.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
+# Versión de la aplicación
+version: 1.0.1+2  # Formato: version_name+version_code
+
 environment:
   sdk: '^3.7.0'
   flutter: ">=3.16.0"
@@ -50,6 +53,7 @@ dependencies:
   google_mlkit_text_recognition: ^0.15.0
   camera: ^0.10.5+9
   flutter_spinkit: ^5.2.0
+  image: ^4.5.4
 
 dev_dependencies:
   flutter_test:
