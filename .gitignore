@@ -1,2 +1,3 @@
 *.hprof
-functions/temp_function.txt 
+functions/temp_function.txt
+.DS_Store 
