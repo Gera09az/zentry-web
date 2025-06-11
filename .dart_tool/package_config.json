@@ -392,12 +392,6 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "google_ml_kit",
-      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_ml_kit-0.7.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "google_mlkit_commons",
       "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_mlkit_commons-0.11.0",
       "packageUri": "lib/",
@@ -752,6 +746,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "rxdart",
+      "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/rxdart-0.28.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "screenshot",
       "rootUri": "file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/screenshot-2.5.0",
       "packageUri": "lib/",
@@ -1022,7 +1022,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-22T04:15:52.765984Z",
+  "generated": "2025-06-11T00:34:53.618717Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///Users/gerardoarroyo/flutter",

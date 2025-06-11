@@ -242,10 +242,6 @@ google_identity_services_web
 3.4
 file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_identity_services_web-0.3.3/
 file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_identity_services_web-0.3.3/lib/
-google_ml_kit
-2.12
-file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_ml_kit-0.7.3/
-file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_ml_kit-0.7.3/lib/
 google_mlkit_commons
 2.16
 file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/google_mlkit_commons-0.11.0/
@@ -482,6 +478,10 @@ qr_flutter
 2.19
 file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/qr_flutter-4.1.0/
 file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/qr_flutter-4.1.0/lib/
+rxdart
+2.12
+file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/rxdart-0.28.0/
+file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib/
 screenshot
 2.12
 file:///Users/gerardoarroyo/.pub-cache/hosted/pub.dev/screenshot-2.5.0/

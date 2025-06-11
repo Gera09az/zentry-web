@@ -509,14 +509,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.3"
-  google_ml_kit:
-    dependency: "direct main"
-    description:
-      name: google_ml_kit
-      sha256: "1bfe11253fdcb5da7903ec465c8144517969e9fd1bbb1f87a5010c9648641e91"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.3"
   google_mlkit_commons:
     dependency: transitive
     description:
@@ -989,6 +981,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
+  rxdart:
+    dependency: "direct main"
+    description:
+      name: rxdart
+      sha256: "5c3004a4a8dbb94bd4bf5412a4def4acdaa12e12f269737a5751369e12d1a962"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.28.0"
   screenshot:
     dependency: "direct main"
     description:
