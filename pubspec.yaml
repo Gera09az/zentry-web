@@ -5,7 +5,7 @@ description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # Versión de la aplicación
-version: 1.0.1+2  # Formato: version_name+version_code
+version: 2.0.1+15  # Formato: version_name+version_code
 
 environment:
   sdk: '^3.7.0'
