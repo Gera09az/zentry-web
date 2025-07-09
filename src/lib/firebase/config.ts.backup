@@ -1,0 +1,169 @@
+import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
+import { 
+  getAuth, 
+  connectAuthEmulator, 
+  onAuthStateChanged
+} from 'firebase/auth';
+import type { 
+  Auth, 
+  User, 
+  UserCredential, 
+  IdTokenResult 
+} from 'firebase/auth';
+import { getFirestore, connectFirestoreEmulator, type Firestore } from 'firebase/firestore';
+import { getStorage, type FirebaseStorage } from 'firebase/storage';
+import { getMessaging, type Messaging } from 'firebase/messaging';
+import { getAnalytics, type Analytics } from "firebase/analytics";
+import { getFunctions } from 'firebase/functions';
+
+// Extender la interfaz Window para incluir _firebaseInitLazy
+declare global {
+  interface Window {
+    _firebaseInitLazy: {
+      getStorage: () => FirebaseStorage;
+      getMessaging: () => Messaging | null;
+    };
+  }
+}
+
+interface FirebaseConfig {
+  apiKey: string;
+  authDomain: string;
+  projectId: string;
+  storageBucket: string;
+  messagingSenderId: string;
+  appId: string;
+  measurementId: string;
+}
+
+// Usar credenciales hardcodeadas para asegurar que se usen las correctas
+const firebaseConfig: FirebaseConfig = {
+  apiKey: "AIzaSyAPKpz9Twt_n8Zgkk8mh4cFNuo4SipwG5c",
+  authDomain: "zentryapp-949f4.firebaseapp.com",
+  projectId: "zentryapp-949f4",
+  storageBucket: "zentryapp-949f4.appspot.com",
+  messagingSenderId: "905646843025",
+  appId: "1:905646843025:web:9b23d5c6d6d6c78f93cb30",
+  measurementId: "G-DK611Z8182"
+};
+
+console.log('=== CONFIGURACIÓN DE FIREBASE ===');
+console.log('Configuración cargada:');
+console.log('- Project ID:', firebaseConfig.projectId);
+console.log('- Auth Domain:', firebaseConfig.authDomain);
+console.log('- API Key:', firebaseConfig.apiKey.substring(0, 5) + '...');
+console.log('- Messaging Sender ID:', firebaseConfig.messagingSenderId);
+
+// Variable para detectar múltiples inicializaciones en desarrollo
+let initCount = 0;
+
+// Inicializar Firebase solo una vez
+let app: FirebaseApp;
+let auth: Auth;
+let db: Firestore;
+let analytics: Analytics | null = null;
+let storage: FirebaseStorage | null = null;
+let messaging: Messaging | null = null;
+let functions: any = null;
+
+if (!getApps().length) {
+  try {
+    // En producción, eliminar todos los logs
+    if (process.env.NODE_ENV === 'production') {
+      app = initializeApp(firebaseConfig);
+    } else {
+      initCount++;
+      console.log(`Firebase inicialización #${initCount}`);
+      app = initializeApp(firebaseConfig);
+    }
+  } catch (error) {
+    console.error('Error crítico al inicializar Firebase:', error);
+    throw error;
+  }
+} else {
+  app = getApp();
+}
+
+// Inicializar servicios
+try {
+  auth = getAuth(app);
+  db = getFirestore(app);
+  functions = getFunctions(app);
+  
+  if (typeof window !== 'undefined') {
+    // Inicializar Storage directamente en el cliente
+    try {
+      storage = getStorage(app);
+      console.log("[Firebase Config] Storage inicializado directamente.");
+    } catch (e) {
+      console.error("[Firebase Config] Error inicializando Storage directamente:", e);
+      storage = null; // Asegurarse de que sea null si falla
+    }
+
+    // Inicializar Analytics y Messaging de forma perezosa o como estaba
+    const initRemainingClientServices = () => {
+      try {
+        if (!analytics && typeof getAnalytics === 'function') {
+          setTimeout(() => {
+            try {
+              analytics = getAnalytics(app);
+            } catch (e) {
+              // Ignorar errores
+            }
+          }, 5000);
+        }
+        
+        const lazyInitMessaging = () => {
+          if (!messaging && typeof getMessaging === 'function') {
+            try {
+              messaging = getMessaging(app);
+            } catch (e) {
+              console.warn('[Firebase Config] Error inicializando messaging (no soportado):', e);
+            }
+          }
+          return messaging;
+        };
+        
+        // La función getStorage en _firebaseInitLazy ya no es necesaria para storage, 
+        // pero la mantenemos por si algo más la usa o para messaging.
+        window._firebaseInitLazy = {
+          // getStorage: () => storage, // Podríamos devolver el storage ya inicializado
+          getStorage: () => {
+            if (!storage) { // Doble chequeo por si acaso
+                console.warn("[Firebase Config] getStorage lazy: Storage no estaba inicializado, intentando de nuevo.");
+                storage = getStorage(app);
+            }
+            return storage!;
+          },
+          getMessaging: lazyInitMessaging
+        };
+      } catch (e) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.warn('[Firebase Config] Error no crítico al inicializar servicios restantes de cliente:', e);
+        }
+      }
+    };
+    
+    if (document.readyState === 'complete') {
+      setTimeout(initRemainingClientServices, 2000);
+    } else {
+      window.addEventListener('load', () => setTimeout(initRemainingClientServices, 2000));
+    }
+  }
+} catch (error) {
+  console.error('[Firebase Config] Error al inicializar servicios Firebase:', error);
+  throw error;
+}
+
+console.log('[Firebase Config] === INICIALIZACIÓN DE FIREBASE COMPLETADA ===');
+
+// Exportar para usar en otros módulos
+export { app, auth, db, analytics, storage, messaging, functions };
+
+// Re-exportar funciones y tipos de Auth para un uso centralizado y consistente
+export { 
+  onAuthStateChanged,
+  type User,
+  type UserCredential,
+  type IdTokenResult
+}; 

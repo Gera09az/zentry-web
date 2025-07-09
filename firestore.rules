@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reglas para la colección de usuarios
+    match /usuarios/{userId} {
+      // Permitir que cualquier usuario autenticado cree un documento con su propio UID
+      allow create: if request.auth != null && request.auth.uid == userId;
+      // Permitir que solo el propietario lea, actualice o elimine su documento
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Permitir lectura de residenciales para verificación durante registro
+    match /residenciales/{residencialId} {
+      // Permitir lectura para verificar usuarios existentes durante el registro
+      allow read: if true;
+      // Solo usuarios autenticados pueden escribir
+      allow write: if request.auth != null;
+      
+      // Permitir lectura de usuarios dentro de residenciales para verificación
+      match /usuarios/{userId} {
+        allow read: if true; // Necesario para verificar usuarios existentes durante registro
+        allow write: if request.auth != null;
+      }
+    }
+    
+    // Reglas para otras colecciones
+    match /{document=**} {
+      // Permitir lectura y escritura para usuarios autenticados en otras colecciones
+      allow read, write: if request.auth != null;
+    }
+  }
+} 

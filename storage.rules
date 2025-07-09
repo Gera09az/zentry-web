@@ -1,0 +1,16 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Regla para documentos de registro público
+    // Permite escribir Y LEER sin autenticación para el proceso de registro
+    match /public_registration/{residentialId}/{userId}/{document} {
+      allow write: if true; // Permite subida durante registro
+      allow read: if true;  // Permite obtener URL de descarga durante registro
+    }
+    
+    // Reglas para otras rutas que requieren autenticación
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+} 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Limpiar Sesiones de Firebase</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .button { background: #ff4444; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 10px 0; }
+        .success { color: green; font-weight: bold; }
+        .info { background: #f0f0f0; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        pre { background: #f8f8f8; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧹 Limpiar Sesiones de Firebase</h1>
+    
+    <div class="info">
+        <strong>Problema:</strong> Firebase Authentication tiene una sesión persistente que está interfiriendo con el registro.
+    </div>
+
+    <button class="button" onclick="clearEverything()">🗑️ LIMPIAR TODO</button>
+    <button class="button" onclick="clearFirebaseOnly()" style="background: #orange;">🔥 Solo Firebase</button>
+    <button class="button" onclick="clearStorageOnly()" style="background: #blue;">💾 Solo Storage</button>
+
+    <div id="result"></div>
+
+    <div class="info">
+        <strong>Pasos manuales adicionales:</strong>
+        <ol>
+            <li>Presiona <strong>F12</strong> para abrir Developer Tools</li>
+            <li>Ve a la pestaña <strong>Application</strong></li>
+            <li>En el panel izquierdo, busca <strong>Local Storage</strong></li>
+            <li>Haz clic en <strong>http://localhost:3000</strong></li>
+            <li>Elimina TODAS las entradas que contengan "firebase"</li>
+            <li>Haz lo mismo en <strong>Session Storage</strong></li>
+            <li>Ve a <strong>Cookies</strong> y elimina todas las cookies</li>
+            <li>Cierra TODAS las pestañas de tu aplicación</li>
+            <li>Reinicia el navegador completamente</li>
+        </ol>
+    </div>
+
+    <script>
+        function clearEverything() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="success">🚀 Limpiando TODO...</div>';
+            
+            try {
+                // Limpiar localStorage
+                localStorage.clear();
+                
+                // Limpiar sessionStorage
+                sessionStorage.clear();
+                
+                // Limpiar IndexedDB (Firebase usa esto)
+                if ('indexedDB' in window) {
+                    indexedDB.deleteDatabase('firebase-heartbeat-database');
+                    indexedDB.deleteDatabase('firebaseLocalStorageDb');
+                }
+                
+                // Intentar limpiar cache
+                if ('caches' in window) {
+                    caches.keys().then(cacheNames => {
+                        cacheNames.forEach(cacheName => {
+                            caches.delete(cacheName);
+                        });
+                    });
+                }
+                
+                result.innerHTML += '<div class="success">✅ Limpieza completada!</div>';
+                result.innerHTML += '<div class="info"><strong>Siguiente:</strong> Cierra TODAS las pestañas, reinicia el navegador y prueba nuevamente.</div>';
+                
+            } catch (error) {
+                result.innerHTML += '<div style="color: red;">❌ Error: ' + error.message + '</div>';
+            }
+        }
+        
+        function clearFirebaseOnly() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="success">🔥 Limpiando solo Firebase...</div>';
+            
+            try {
+                // Buscar y eliminar claves relacionadas con Firebase
+                for (let i = localStorage.length - 1; i >= 0; i--) {
+                    const key = localStorage.key(i);
+                    if (key && (key.includes('firebase') || key.includes('authUser') || key.includes('token'))) {
+                        localStorage.removeItem(key);
+                        result.innerHTML += '<div>Eliminado: ' + key + '</div>';
+                    }
+                }
+                
+                for (let i = sessionStorage.length - 1; i >= 0; i--) {
+                    const key = sessionStorage.key(i);
+                    if (key && (key.includes('firebase') || key.includes('authUser') || key.includes('token'))) {
+                        sessionStorage.removeItem(key);
+                        result.innerHTML += '<div>Eliminado: ' + key + '</div>';
+                    }
+                }
+                
+                result.innerHTML += '<div class="success">✅ Firebase limpiado!</div>';
+                
+            } catch (error) {
+                result.innerHTML += '<div style="color: red;">❌ Error: ' + error.message + '</div>';
+            }
+        }
+        
+        function clearStorageOnly() {
+            const result = document.getElementById('result');
+            result.innerHTML = '<div class="success">💾 Mostrando contenido del storage...</div>';
+            
+            result.innerHTML += '<h3>Local Storage:</h3><pre>';
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                result.innerHTML += key + ' = ' + localStorage.getItem(key).substring(0, 100) + '...\n';
+            }
+            result.innerHTML += '</pre>';
+            
+            result.innerHTML += '<h3>Session Storage:</h3><pre>';
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                result.innerHTML += key + ' = ' + sessionStorage.getItem(key).substring(0, 100) + '...\n';
+            }
+            result.innerHTML += '</pre>';
+        }
+        
+        // Auto-detectar problemas
+        window.onload = function() {
+            const firebaseKeys = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && (key.includes('firebase') || key.includes('authUser') || key.includes('token'))) {
+                    firebaseKeys.push(key);
+                }
+            }
+            
+            if (firebaseKeys.length > 0) {
+                document.getElementById('result').innerHTML = 
+                    '<div style="color: orange; font-weight: bold;">⚠️ Se encontraron ' + firebaseKeys.length + ' entradas de Firebase en localStorage!</div>' +
+                    '<div>Claves encontradas: ' + firebaseKeys.join(', ') + '</div>';
+            }
+        };
+    </script>
+</body>
+</html> 
