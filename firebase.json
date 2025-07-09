@@ -1,18 +1,36 @@
 {
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "out",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      { "source": "/_next/**", "destination": "/_next/index.html" },
+      { "source": "/static/**", "destination": "/static/index.html" },
+      { "source": "/favicon.ico", "destination": "/favicon.ico" },
+      { "source": "/images/**", "destination": "/images/index.html" },
+      { "source": "/**", "destination": "/index.html" }
+    ]
+  },
   "functions": [
     {
-      "source": "zentry/functions",
-      "codebase": "app-movil",
+      "source": "functions",
+      "codebase": "web-app",
       "ignore": [
         "node_modules",
         ".git",
         "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run build"
+        "firebase-debug.*.log"
       ]
     }
-  ]
+  ],
+  "storage": {
+    "rules": "storage.rules"
+  }
 }
