@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "zentry-web-app",
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+} 
