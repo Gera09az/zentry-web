@@ -6,14 +6,21 @@ import { initializeApp, getApps, cert } from 'firebase-admin/app';
 
 // Inicializar Firebase Admin si no está inicializado
 if (getApps().length === 0) {
-  initializeApp({
-    credential: cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    }),
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  });
+  try {
+    const serviceAccountKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+    if (!serviceAccountKey) {
+      throw new Error('FIREBASE_SERVICE_ACCOUNT_KEY no está configurada');
+    }
+    
+    const serviceAccount = JSON.parse(serviceAccountKey);
+    initializeApp({
+      credential: cert(serviceAccount),
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET || `${serviceAccount.project_id}.appspot.com`,
+    });
+  } catch (error) {
+    console.error('Error inicializando Firebase Admin:', error);
+    // No lanzar error aquí para permitir build
+  }
 }
 
 export async function POST(request: NextRequest) {
